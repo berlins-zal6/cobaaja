@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Alumni 12 TKJ 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <style>
+      body {
+        background-color: #f8fafc;
+        color: #1e293b;
+        font-family: "Inter", sans-serif;
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(226, 232, 240, 0.8);
+      }
+      .count-font {
+        font-variant-numeric: tabular-nums;
+      }
+    </style>
+  </head>
+  <body
+    class="min-h-screen flex flex-col items-center justify-between sm:justify-center p-3 sm:p-6 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-50 via-slate-50 to-indigo-50 relative"
+  >
+    <!-- POP-UP MODAL SAMBUTAN & TUJUAN WEB -->
+    <div
+      id="welcomeModal"
+      class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 transition-opacity duration-300"
+    >
+      <div
+        class="bg-white rounded-3xl p-5 sm:p-8 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100 text-center relative flex flex-col items-center justify-between transform transition-all scale-100"
+      >
+        <div class="w-full flex flex-col items-center">
+          <div
+            class="w-12 h-12 sm:w-14 sm:h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mb-3 sm:mb-4 text-xl sm:text-2xl shrink-0"
+          >
+            <i class="fa-solid fa-bullhorn"></i>
+          </div>
+          <h2 class="text-lg sm:text-2xl font-black text-slate-800 mb-2">
+            Hallo Alumni 12 TKJ 2!
+          </h2>
+          <div
+            class="text-xs sm:text-sm text-slate-600 space-y-3 mb-5 text-left bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 w-full"
+          >
+            <p>
+              <strong>Tujuan Website Ini:</strong>
+            </p>
+            <p class="text-slate-500 leading-relaxed">
+              Haloo guyss saya adalah Berlin Zalukhu salah satu admin Instagram
+              @alumni_12tkj2_smkn1lhw, untuk melengkapi grid dan feed ig alumni
+              kita tersebut, maka saya buat web ini untuk mengumpulkan foto dan
+              kata-kata dari teman-teman semua, dan akan membuat foto kita
+              menjadi lebih keren di dalam feed Instagram. <br />
+              Saya harap teman-teman semua bisa mengisi form ini dengan lengkap
+              dan benar, agar feed ig alumni kita menjadi lebih menarik dan
+              berkesan. Terima kasih banyak atas partisipasinya!
+            </p>
+            <p class="text-[11px] text-indigo-600 font-semibold italic mt-2">
+              💡 Catatan: Isian form Anda akan tersimpan otomatis secara lokal
+              jika belum sempat dikirim.
+            </p>
+          </div>
+        </div>
+        <button
+          id="closeModalBtn"
+          class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl text-xs sm:text-sm transition duration-200 shadow-lg shadow-indigo-200 flex items-center justify-center gap-2 shrink-0"
+        >
+          <span>Lanjutkan</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- POP-UP MODAL BERHASIL & UPLOAD GOOGLE DRIVE -->
+    <div
+      id="driveModal"
+      class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4 transition-opacity duration-300"
+    >
+      <div
+        class="bg-white rounded-3xl p-5 sm:p-8 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100 text-center relative flex flex-col items-center justify-between transform transition-all scale-100"
+      >
+        <!-- TOMBOL CLOSE MODAL DRIVE -->
+        <button
+          id="closeDriveModalBtn"
+          class="absolute top-4 right-4 w-8 h-8 bg-slate-100 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded-full flex items-center justify-center transition"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="w-full flex flex-col items-center">
+          <div
+            class="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-3 sm:mb-4 text-xl sm:text-2xl shrink-0"
+          >
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <h2 class="text-lg sm:text-2xl font-black text-slate-800 mb-1">
+            Berhasil!
+          </h2>
+          <p class="text-xs text-slate-500 mb-4">
+            Silahkan Upload foto terbaikmu sekarang!.
+          </p>
+
+          <!-- KETENTUAN PENGIRIMAN FOTO -->
+          <div
+            class="text-xs text-slate-600 space-y-2 mb-5 text-left bg-indigo-50/60 p-3.5 sm:p-4 rounded-2xl border border-indigo-100 w-full"
+          >
+            <p class="font-bold text-indigo-900 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-info text-indigo-600"></i> Ketentuan
+              Foto:
+            </p>
+            <ul
+              class="list-disc list-inside space-y-1 text-slate-600 text-[11px] leading-relaxed"
+            >
+              <li>Foto wajah/pribadi terlihat jelas (High Quality / HD).</li>
+              <li>Format file berupa JPG, JPEG, atau PNG.</li>
+              <li>
+                Ubah nama file foto menjadi:
+                <strong>NamaLengkap_Instagram</strong> (Contoh:
+                <i>Berlin Septenus Zalukhu_@berlin_zalukhu.jpg</i>).
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- TOMBOL KE GOOGLE DRIVE -->
+        <div class="w-full">
+          <a
+            id="driveLinkBtn"
+            href="https://drive.google.com/drive/folders/16hrGlyoss5OmYv472mnTzeUZ8Epym1J_?usp=sharing"
+            target="_blank"
+            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl text-xs sm:text-sm transition duration-200 shadow-lg shadow-indigo-200 flex items-center justify-center gap-2"
+          >
+            <i class="fa-brands fa-google-drive text-base"></i>
+            <span>Upload Foto</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOATING WIDGET POP-UP UNTUK BUKA MODAL DRIVE -->
+    <div
+      id="floatingDriveWidget"
+      class="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-40 hidden flex-col items-end gap-2 transition-all duration-300"
+    >
+      <!-- TOOLTIP / KETERANGAN STATUS -->
+      <div
+        id="widgetTooltip"
+        class="bg-slate-900 text-white text-[11px] py-1.5 px-3 rounded-xl shadow-xl flex items-center gap-2 border border-slate-700 animate-bounce"
+      >
+        <span
+          id="tooltipBadge"
+          class="w-2 h-2 rounded-full bg-amber-400 shrink-0"
+        ></span>
+        <span id="tooltipText" class="font-medium whitespace-nowrap"
+          >⚠️ Kamu belum upload foto?!</span
+        >
+      </div>
+
+      <!-- FLOATING BUTTON -->
+      <button
+        id="openDriveFloatingBtn"
+        class="relative group bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-4 py-3 sm:px-5 sm:py-3.5 rounded-full shadow-2xl flex items-center gap-2 text-xs font-bold transition-all duration-200"
+      >
+        <!-- BADGE INDIKATOR PING -->
+        <span
+          id="pingIndicator"
+          class="absolute -top-1 -right-1 flex h-3.5 w-3.5"
+        >
+          <span
+            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"
+          ></span>
+          <span
+            class="relative inline-flex rounded-full h-3.5 w-3.5 bg-amber-500 border-2 border-white"
+          ></span>
+        </span>
+
+        <i class="fa-brands fa-google-drive text-base sm:text-lg"></i>
+        <span>Upload Foto</span>
+      </button>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div
+      class="w-full max-w-lg glass rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 shadow-2xl shadow-blue-100/50 flex flex-col justify-between my-4 sm:my-8"
+    >
+      <div id="display-area" class="text-center flex flex-col items-center">
+        <span
+          class="px-3 py-1 bg-indigo-100 text-indigo-600 border border-indigo-200 text-[10px] sm:text-xs font-bold rounded-full uppercase tracking-widest inline-flex items-center justify-center text-center max-w-full"
+        >
+          Informasi & Formulir Alumni 12 TKJ 2
+        </span>
+
+        <h1
+          id="nama-tugas"
+          class="text-xl sm:text-3xl font-black text-slate-800 mt-4 sm:mt-6 mb-1.5 sm:mb-2 tracking-tight leading-tight"
+        >
+          Tugas Struktur Data
+        </h1>
+        <p
+          id="tgl-deadline"
+          class="text-slate-500 text-xs sm:text-sm mb-5 sm:mb-8 font-medium italic"
+        >
+          Memuat data...
+        </p>
+
+        <!-- COUNTDOWN TIMER (Flexbox Adaptif Mobile) -->
+        <div
+          class="flex flex-row items-center justify-between w-full gap-1.5 sm:gap-3 mb-6 sm:mb-8"
+        >
+          <div
+            class="flex-1 bg-white p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center min-w-0"
+          >
+            <div
+              id="hari"
+              class="text-xl sm:text-3xl font-bold text-slate-800 count-font"
+            >
+              00
+            </div>
+            <div
+              class="text-[8px] sm:text-[10px] uppercase text-slate-400 font-bold tracking-wider mt-0.5"
+            >
+              Hari
+            </div>
+          </div>
+          <div
+            class="flex-1 bg-white p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center min-w-0"
+          >
+            <div
+              id="jam"
+              class="text-xl sm:text-3xl font-bold text-slate-800 count-font"
+            >
+              00
+            </div>
+            <div
+              class="text-[8px] sm:text-[10px] uppercase text-slate-400 font-bold tracking-wider mt-0.5"
+            >
+              Jam
+            </div>
+          </div>
+          <div
+            class="flex-1 bg-white p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center min-w-0"
+          >
+            <div
+              id="menit"
+              class="text-xl sm:text-3xl font-bold text-slate-800 count-font"
+            >
+              00
+            </div>
+            <div
+              class="text-[8px] sm:text-[10px] uppercase text-slate-400 font-bold tracking-wider mt-0.5"
+            >
+              Menit
+            </div>
+          </div>
+          <div
+            class="flex-1 bg-white p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center min-w-0"
+          >
+            <div
+              id="detik"
+              class="text-xl sm:text-3xl font-bold text-indigo-600 count-font"
+            >
+              00
+            </div>
+            <div
+              class="text-[8px] sm:text-[10px] uppercase text-slate-400 font-bold tracking-wider mt-0.5"
+            >
+              Detik
+            </div>
+          </div>
+        </div>
+
+        <!-- FORM KELENGKAPAN & PESAN ALUMNI -->
+        <div
+          class="w-full text-left bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm"
+        >
+          <h3
+            class="text-indigo-900 font-bold text-sm sm:text-base mb-4 flex items-center justify-between border-b pb-2 gap-2"
+          >
+            <span class="flex items-center gap-2 truncate">
+              <i
+                class="fa-solid fa-graduation-cap text-indigo-600 shrink-0"
+              ></i>
+              <span class="truncate">Pesan Alumni 12 TKJ 2</span>
+            </span>
+            <span
+              id="draft-indicator"
+              class="text-[10px] font-normal text-emerald-600 hidden flex items-center gap-1 shrink-0"
+            >
+              <i class="fa-solid fa-floppy-disk"></i> Draft tersimpan
+            </span>
+          </h3>
+
+          <form id="alumniForm" class="flex flex-col gap-3.5 sm:gap-4">
+            <div class="flex flex-col gap-1">
+              <label class="block text-xs font-bold text-slate-700"
+                >Nama Lengkap</label
+              >
+              <input
+                type="text"
+                name="nama"
+                id="field-nama"
+                required
+                placeholder="Contoh: Berlin Zalukhu"
+                class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label class="block text-xs font-bold text-slate-700"
+                >Nama Instagram (Username)</label
+              >
+              <div class="relative flex items-center">
+                <span
+                  class="absolute left-0 pl-3 text-slate-400 text-xs flex items-center pointer-events-none"
+                  >@</span
+                >
+                <input
+                  type="text"
+                  name="instagram"
+                  id="field-instagram"
+                  required
+                  placeholder="username_ig"
+                  class="w-full pl-7 pr-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label class="block text-xs font-bold text-slate-700"
+                >Kata Perkenalan</label
+              >
+              <input
+                type="text"
+                name="perkenalan"
+                id="field-perkenalan"
+                required
+                placeholder="Halo, saya dari jurusan TKJ..."
+                class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label class="block text-xs font-bold text-slate-700"
+                >Motivasi Hidup</label
+              >
+              <textarea
+                name="motivasi"
+                id="field-motivasi"
+                rows="2"
+                required
+                placeholder="Tuliskan kata motivasi favoritmu..."
+                class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              ></textarea>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label class="block text-xs font-bold text-slate-700"
+                >Pesan / Kata-kata Alumni 12 TKJ 2</label
+              >
+              <textarea
+                name="pesan_alumni"
+                id="field-pesan_alumni"
+                rows="3"
+                required
+                placeholder="Pesan, kenangan, atau harapan untuk 12 TKJ 2..."
+                class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              id="btn-submit"
+              class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl transition duration-200 text-xs shadow-md flex items-center justify-center gap-2 mt-1"
+            >
+              <i class="fa-solid fa-paper-plane"></i> Kirim + Up Fotomu
+            </button>
+            <div
+              id="status-pesan"
+              class="text-center text-xs font-semibold hidden"
+            ></div>
+          </form>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div
+        class="mt-6 sm:mt-8 pt-4 border-t border-slate-200/60 text-center flex justify-center items-center"
+      >
+        <p class="text-xs text-slate-400 font-medium">
+          Created by:
+          <a
+            href="https://berlins-zal6.github.io/profileq/"
+            target="_blank"
+            class="relative group text-indigo-500 font-bold hover:text-indigo-700 transition duration-200 inline-block"
+          >
+            berlinszal
+            <span
+              class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 text-white text-[9px] font-bold rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap"
+            >
+              Click Me! <i class="fa-solid fa-eye"></i>
+            </span>
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // ==========================================
+      // CONFIGURATION & GOOGLE SPREADSHEET API
+      // ==========================================
+      const SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbzgR1awp4001bZDqNuVcaoeqka9S-8AV7pkuZmaMdH0L8Hb1RrOv365wI-a07iYK8U/exec";
+
+      // PASTE LINK FOLDER GOOGLE DRIVE ANDA DI SINI
+      const GOOGLE_DRIVE_URL = "https://drive.google.com";
+
+      const DATA_TUGAS = {
+        nama: "Lengkapi Ig | @alumni_12tkj2_smkn1lhw",
+        deadline: "2026-08-13T23:59:00",
+      };
+
+      document.getElementById("nama-tugas").innerText = DATA_TUGAS.nama;
+      document.getElementById("tgl-deadline").innerText =
+        "Batas: " +
+        new Date(DATA_TUGAS.deadline).toLocaleString("id-ID", {
+          dateStyle: "long",
+          timeStyle: "short",
+        });
+
+      // --- LOGIK POP-UP MODAL SAMBUTAN ---
+      const welcomeModal = document.getElementById("welcomeModal");
+      const closeModalBtn = document.getElementById("closeModalBtn");
+
+      closeModalBtn.addEventListener("click", () => {
+        welcomeModal.classList.add("opacity-0", "pointer-events-none");
+        setTimeout(() => {
+          welcomeModal.style.display = "none";
+        }, 300);
+      });
+
+      // --- LOGIK POP-UP MODAL UPLOAD DRIVE & FLOATING WIDGET ---
+      const driveModal = document.getElementById("driveModal");
+      const closeDriveModalBtn = document.getElementById("closeDriveModalBtn");
+      const driveLinkBtn = document.getElementById("driveLinkBtn");
+      const floatingDriveWidget = document.getElementById(
+        "floatingDriveWidget",
+      );
+      const openDriveFloatingBtn = document.getElementById(
+        "openDriveFloatingBtn",
+      );
+      const widgetTooltip = document.getElementById("widgetTooltip");
+      const tooltipBadge = document.getElementById("tooltipBadge");
+      const tooltipText = document.getElementById("tooltipText");
+      const pingIndicator = document.getElementById("pingIndicator");
+
+      if (driveLinkBtn) {
+        driveLinkBtn.href = GOOGLE_DRIVE_URL;
+        driveLinkBtn.addEventListener("click", () => {
+          localStorage.setItem("alumni_photo_uploaded", "true");
+          updateWidgetStatus();
+        });
+      }
+
+      function updateWidgetStatus() {
+        const isUploaded =
+          localStorage.getItem("alumni_photo_uploaded") === "true";
+        if (isUploaded) {
+          tooltipBadge.className =
+            "w-2 h-2 rounded-full bg-emerald-400 shrink-0";
+          tooltipText.innerText = "✓ Foto sudah diupload ke Drive";
+          widgetTooltip.classList.remove("animate-bounce");
+          pingIndicator.classList.add("hidden");
+        } else {
+          tooltipBadge.className = "w-2 h-2 rounded-full bg-amber-400 shrink-0";
+          tooltipText.innerText = "⚠️ Masih belum upload foto!";
+          widgetTooltip.classList.add("animate-bounce");
+          pingIndicator.classList.remove("hidden");
+        }
+      }
+
+      function showDriveModal() {
+        driveModal.classList.remove("hidden");
+        if (welcomeModal) {
+          welcomeModal.style.display = "none";
+        }
+      }
+
+      function hideDriveModal() {
+        driveModal.classList.add("hidden");
+        if (localStorage.getItem("alumni_submitted") === "true") {
+          floatingDriveWidget.classList.remove("hidden");
+          floatingDriveWidget.classList.add("flex");
+          updateWidgetStatus();
+        }
+      }
+
+      closeDriveModalBtn.addEventListener("click", hideDriveModal);
+      openDriveFloatingBtn.addEventListener("click", () => {
+        showDriveModal();
+      });
+
+      // --- CEK APABILA USER SUDAH PERNAH SUBMIT SEBELUMNYA ---
+      window.addEventListener("DOMContentLoaded", () => {
+        if (localStorage.getItem("alumni_submitted") === "true") {
+          showDriveModal();
+          floatingDriveWidget.classList.remove("hidden");
+          floatingDriveWidget.classList.add("flex");
+          updateWidgetStatus();
+        }
+      });
+
+      // --- AUTO-SAVE FORM TO LOCALSTORAGE ---
+      const formFields = [
+        "nama",
+        "instagram",
+        "perkenalan",
+        "motivasi",
+        "pesan_alumni",
+      ];
+      const draftIndicator = document.getElementById("draft-indicator");
+
+      function loadFormDraft() {
+        let hasDraft = false;
+        formFields.forEach((field) => {
+          const savedValue = localStorage.getItem("alumni_draft_" + field);
+          if (savedValue) {
+            const inputEl = document.getElementById("field-" + field);
+            if (inputEl) {
+              inputEl.value = savedValue;
+              hasDraft = true;
+            }
+          }
+        });
+        if (hasDraft) {
+          draftIndicator.classList.remove("hidden");
+        }
+      }
+
+      formFields.forEach((field) => {
+        const inputEl = document.getElementById("field-" + field);
+        if (inputEl) {
+          inputEl.addEventListener("input", (e) => {
+            localStorage.setItem("alumni_draft_" + field, e.target.value);
+            draftIndicator.classList.remove("hidden");
+          });
+        }
+      });
+
+      function clearFormDraft() {
+        formFields.forEach((field) => {
+          localStorage.removeItem("alumni_draft_" + field);
+        });
+        draftIndicator.classList.add("hidden");
+      }
+
+      loadFormDraft();
+
+      // --- LOGIK FORM SEND TO GOOGLE SHEETS ---
+      const form = document.getElementById("alumniForm");
+      const statusPesan = document.getElementById("status-pesan");
+      const btnSubmit = document.getElementById("btn-submit");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        if (SCRIPT_URL === "GANTI_DENGAN_URL_WEB_APP_GOOGLE_SCRIPT_ANDA") {
+          alert("Silakan atur SCRIPT_URL terlebih dahulu di bagian script JS.");
+          return;
+        }
+
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...`;
+        statusPesan.classList.remove(
+          "hidden",
+          "text-emerald-600",
+          "text-rose-600",
+        );
+        statusPesan.classList.add("text-slate-500");
+        statusPesan.innerText = "Menyimpan data anda...";
+
+        fetch(SCRIPT_URL, {
+          method: "POST",
+          body: new FormData(form),
+        })
+          .then((response) => {
+            statusPesan.classList.remove("text-slate-500");
+            statusPesan.classList.add("text-emerald-600");
+            statusPesan.innerText = "✓ Data Anda berhasil disimpan!";
+            form.reset();
+            clearFormDraft();
+
+            localStorage.setItem("alumni_submitted", "true");
+
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Kirim + Up Fotomu`;
+
+            showDriveModal();
+            floatingDriveWidget.classList.remove("hidden");
+            floatingDriveWidget.classList.add("flex");
+            updateWidgetStatus();
+          })
+          .catch((error) => {
+            statusPesan.classList.remove("text-slate-500");
+            statusPesan.classList.add("text-rose-600");
+            statusPesan.innerText = "✕ Gagal menyimpan data. Coba lagi.";
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Kirim + Up Fotomu`;
+          });
+      });
+
+      // --- TIMER COUNTDOWN ---
+      function updateTimer() {
+        const now = new Date().getTime();
+        const target = new Date(DATA_TUGAS.deadline).getTime();
+        const diff = target - now;
+
+        if (diff <= 0) {
+          document.getElementById("display-area").innerHTML =
+            `<div class="text-center py-10 px-4 flex flex-col items-center justify-center">
+                <div class="bg-rose-50 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-8 h-8 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h1 class="text-xl font-black text-rose-500 uppercase tracking-tight">Waktu Habis!</h1>
+                <p class="text-slate-500 mt-2 text-sm font-medium">Batas pengisian form sudah ditutup.</p>
+             </div>`;
+          return;
+        }
+
+        const elHari = document.getElementById("hari");
+        const elJam = document.getElementById("jam");
+        const elMenit = document.getElementById("menit");
+        const elDetik = document.getElementById("detik");
+
+        elHari.innerText = Math.floor(diff / (1000 * 60 * 60 * 24))
+          .toString()
+          .padStart(2, "0");
+        elJam.innerText = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        )
+          .toString()
+          .padStart(2, "0");
+        elMenit.innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+          .toString()
+          .padStart(2, "0");
+        elDetik.innerText = Math.floor((diff % (1000 * 60)) / 1000)
+          .toString()
+          .padStart(2, "0");
+
+        const batasUrgensi = 12 * 60 * 60 * 1000;
+        const isUrgent = diff < batasUrgensi;
+
+        elHari.classList.toggle("text-rose-500", isUrgent);
+        elHari.classList.toggle("text-slate-800", !isUrgent);
+        elJam.classList.toggle("text-rose-500", isUrgent);
+        elJam.classList.toggle("text-slate-800", !isUrgent);
+        elMenit.classList.toggle("text-rose-500", isUrgent);
+        elMenit.classList.toggle("text-slate-800", !isUrgent);
+        elDetik.classList.toggle("text-rose-500", isUrgent);
+        elDetik.classList.toggle("text-indigo-600", !isUrgent);
+      }
+
+      setInterval(updateTimer, 1000);
+      updateTimer();
+    </script>
+  </body>
+</html>
