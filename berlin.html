@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Untuk - Mu ❤️</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary-red: #ff4d4d;
+        --dark-red: #d63031;
+        --soft-pink: #ffafbd;
+        --bg-gradient: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+        --envelope-bg: #fcfbfa;
+        --envelope-shadow: rgba(0, 0, 0, 0.15);
+        --paper-color: #fffdf9;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: "Poppins", sans-serif;
+        background: var(--bg-gradient);
+        overflow: hidden;
+      }
+
+      /* --- ENVELOPE DESIGN --- */
+      .envelope-wrapper {
+        position: relative;
+        cursor: pointer;
+        perspective: 1000px;
+        z-index: 5;
+        transition:
+          transform 0.3s ease,
+          opacity 0.5s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .envelope-wrapper:hover {
+        transform: scale(1.03);
+      }
+
+      .envelope {
+        position: relative;
+        width: 320px;
+        height: 210px;
+        background: var(--envelope-bg);
+        border-radius: 12px;
+        box-shadow: 0 20px 40px var(--envelope-shadow);
+        overflow: hidden;
+      }
+
+      /* Kertas surat mengintip dari dalam */
+      .letter-preview {
+        position: absolute;
+        bottom: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        height: 160px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        border: 1px solid #f0e6e6;
+        z-index: 1;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+      }
+
+      .letter-preview-lines {
+        width: 100%;
+        height: 6px;
+        background: #f5e1e1;
+        border-radius: 3px;
+        margin-bottom: 8px;
+      }
+
+      .letter-preview-lines.short {
+        width: 60%;
+      }
+
+      /* Lipatan Kiri & Kanan & Bawah Amplop */
+      .envelope-front {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        pointer-events: none;
+      }
+
+      /* Lipatan Bawah */
+      .envelope-front::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-bottom: 115px solid #f5efeb;
+        border-left: 160px solid transparent;
+        border-right: 160px solid transparent;
+        filter: drop-shadow(0 -2px 3px rgba(0, 0, 0, 0.03));
+      }
+
+      /* Lipatan Samping (Kiri & Kanan) */
+      .envelope-sides {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .envelope-sides::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        border-left: 160px solid #eae3de;
+        border-top: 105px solid transparent;
+        border-bottom: 105px solid transparent;
+      }
+
+      .envelope-sides::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        border-right: 160px solid #f0e9e4;
+        border-top: 105px solid transparent;
+        border-bottom: 105px solid transparent;
+      }
+
+      /* Lipatan Atas (Flap) */
+      .envelope-flap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 0;
+        z-index: 4;
+        border-top: 115px solid #e3dad4;
+        border-left: 160px solid transparent;
+        border-right: 160px solid transparent;
+        transform-origin: top;
+        transition:
+          transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+          z-index 0.2s;
+        filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.08));
+      }
+
+      /* Stempel Lilin Hati (Wax Seal) */
+      .wax-seal {
+        position: absolute;
+        top: 105px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 5;
+        width: 50px;
+        height: 50px;
+        background: radial-gradient(circle, #ff4d4d 0%, #b31212 100%);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        font-size: 1.5rem;
+        box-shadow:
+          0 4px 10px rgba(179, 18, 18, 0.4),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3);
+        transition:
+          transform 0.4s ease,
+          opacity 0.4s ease;
+      }
+
+      /* Buka Amplop Animation */
+      .envelope-wrapper.open .envelope-flap {
+        transform: rotateX(180deg);
+        z-index: 1;
+      }
+
+      .envelope-wrapper.open .wax-seal {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+      }
+
+      .envelope-wrapper.open .letter-preview {
+        transform: translate(-50%, -80px);
+      }
+
+      /* Tombol / Teks Buka Amplop */
+      /* .click-me {
+        position: absolute;
+        bottom: -55px;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        text-align: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 1px;
+        animation: bounce 2s infinite;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        padding: 8px 20px;
+        border-radius: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      } */
+
+      /* --- LAYAR PENGANTAR --- */
+      .intro-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: #ffffff;
+        z-index: 8000;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.8s ease;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .intro-content {
+        margin: auto 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 500px;
+        padding: 20px 0;
+      }
+
+      .intro-text {
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(1.4rem, 4.5vw, 2.2rem);
+        color: var(--dark-red);
+        width: 100%;
+        line-height: 1.6;
+        min-height: 120px;
+        word-break: break-word;
+      }
+
+      .next-btn {
+        margin-top: 30px;
+        background: var(--dark-red);
+        color: white;
+        font-size: 1.1rem;
+        padding: 12px 35px;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(214, 48, 49, 0.3);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s ease;
+        pointer-events: none;
+        flex-shrink: 0;
+      }
+
+      .next-btn.show {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      .next-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(214, 48, 49, 0.4);
+      }
+
+      /* --- SURAT AKHIR --- */
+      .container {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        background: var(--paper-color);
+        padding: 2rem 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        max-width: 420px;
+        width: 90%;
+        max-height: 85vh;
+        overflow-y: auto;
+        z-index: 10;
+        border: 6px double var(--soft-pink);
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+
+      h1 {
+        font-family: "Dancing Script", cursive;
+        color: var(--dark-red);
+        font-size: clamp(2rem, 6vw, 2.8rem);
+        margin-top: 10px;
+        margin-bottom: 15px;
+      }
+
+      #letterContent {
+        font-size: clamp(0.9rem, 3.5vw, 1.05rem);
+        line-height: 1.6;
+        color: #333;
+        text-align: center;
+      }
+
+      .btn-container {
+        margin-top: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        position: relative;
+        min-height: 50px;
+      }
+
+      button {
+        padding: 12px 28px;
+        border-radius: 50px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s ease;
+        font-family: "Poppins", sans-serif;
+        outline: none;
+      }
+
+      #yesBtn {
+        background: var(--dark-red);
+        color: white;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 12px rgba(214, 48, 49, 0.3);
+      }
+
+      #yesBtn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 18px rgba(214, 48, 49, 0.5);
+      }
+
+      #noBtn {
+        background: #eee;
+        color: #777;
+        border: 1px solid #ddd;
+      }
+
+      #noBtnWarning {
+        display: none;
+        position: fixed;
+        font-size: 0.8rem;
+        color: var(--dark-red);
+        font-style: italic;
+        z-index: 100;
+        pointer-events: none;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 4px 8px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translate(-50%, 0);
+        }
+        50% {
+          transform: translate(-50%, -8px);
+        }
+      }
+
+      @keyframes floatUp {
+        to {
+          transform: translateY(-110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes heartbeat {
+        0% {
+          transform: scale(1);
+        }
+        15% {
+          transform: scale(1.2);
+        }
+        30% {
+          transform: scale(1);
+        }
+      }
+
+      .floating-heart {
+        position: fixed;
+        color: var(--primary-red);
+        pointer-events: none;
+        z-index: 1;
+        animation: floatUp linear forwards;
+      }
+
+      /* Efek kilauan emas */
+      .gold-flash {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0;
+        height: 0;
+        background: radial-gradient(
+          circle,
+          #fff700 0%,
+          #d4af37 50%,
+          transparent 100%
+        );
+        border-radius: 50%;
+        opacity: 0;
+        z-index: 1500;
+        pointer-events: none;
+        transition: all 0.6s ease-out;
+      }
+
+      .flash-active {
+        width: 200vw;
+        height: 200vw;
+        opacity: 0.8;
+      }
+
+      .sparkle {
+        position: fixed;
+        width: 6px;
+        height: 6px;
+        background: #ffd700;
+        border-radius: 50%;
+        z-index: 1501;
+        pointer-events: none;
+        box-shadow: 0 0 10px #fff700;
+      }
+
+      @keyframes shakeScreen {
+        0% {
+          transform: translate(1px, 1px) rotate(0deg);
+        }
+        10% {
+          transform: translate(-1px, -2px) rotate(-1deg);
+        }
+        20% {
+          transform: translate(-3px, 0px) rotate(1deg);
+        }
+        30% {
+          transform: translate(3px, 2px) rotate(0deg);
+        }
+        40% {
+          transform: translate(1px, -1px) rotate(1deg);
+        }
+        50% {
+          transform: translate(-1px, 2px) rotate(-1deg);
+        }
+        60% {
+          transform: translate(-3px, 1px) rotate(0deg);
+        }
+        70% {
+          transform: translate(3px, 1px) rotate(-1deg);
+        }
+        80% {
+          transform: translate(-1px, -1px) rotate(1deg);
+        }
+        90% {
+          transform: translate(1px, 2px) rotate(0deg);
+        }
+        100% {
+          transform: translate(1px, -2px) rotate(-1deg);
+        }
+      }
+
+      .shaking {
+        animation: shakeScreen 0.3s;
+        animation-iteration-count: 1;
+      }
+
+      @keyframes btnScared {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(0.8) rotate(10deg);
+        }
+      }
+
+      .scared {
+        animation: btnScared 0.2s infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Musik Pertama saat amplop dibuka -->
+    <audio id="bgMusic" loop preload="auto">
+      <source src="itulah kenapa jatuh cinta.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- Musik Kedua saat masuk ke pesan inti -->
+    <audio id="bgMusic2" loop preload="auto">
+      <source src="itulah kenapa jatuh cinta2.mp3" type="audio/mpeg" />
+    </audio>
+
+    <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope()">
+      <div class="envelope">
+        <div class="letter-preview">
+          <div class="letter-preview-lines"></div>
+          <div class="letter-preview-lines"></div>
+          <div class="letter-preview-lines short"></div>
+        </div>
+        <div class="envelope-flap"></div>
+        <div class="envelope-sides"></div>
+        <div class="envelope-front"></div>
+        <div class="wax-seal">
+          <i class="fa-solid fa-heart"></i>
+        </div>
+      </div>
+      <!-- <div class="click-me">Buka Amplop</div> -->
+    </div>
+
+    <div class="intro-overlay" id="introOverlay">
+      <div class="intro-content">
+        <div class="intro-text" id="introText"></div>
+        <button class="next-btn" id="nextBtn" onclick="goToMainMessage()">
+          <i class="fa-solid fa-angles-right"></i> ❤️
+        </button>
+      </div>
+    </div>
+
+    <div class="container" id="mainContainer">
+      <div
+        class="heart-icon"
+        style="
+          font-size: 3.5rem;
+          color: var(--dark-red);
+          animation: heartbeat 1.5s infinite;
+        "
+      >
+        <i class="fa-solid fa-heart-pulse"></i>
+      </div>
+      <h1>Teruntuk Febri❤️</h1>
+      <p id="letterContent"></p>
+
+      <div class="btn-container">
+        <button id="yesBtn" onclick="celebrate()">❤️</button>
+        <button
+          id="noBtn"
+          onmouseover="moveButton()"
+          onclick="moveButton()"
+          ontouchstart="moveButton()"
+        >
+          Nggak
+        </button>
+      </div>
+      <span id="noBtnWarning">jgn. nanti dia sedih :( 😜</span>
+    </div>
+
+    <script>
+      // NOMOR WHATSAPP
+      const myPhoneNumber = "6282358478663";
+
+      // PESAN UTUH
+      const fullMessage =
+        'Sayang 🤍 baca pelan-pelan ya 😊\n\n "Ayankkkk, aku udah terlalu nyaman dan sayang sama kamu...dan aku mau kita jaga hubungan kita ini sama-sama ya.😊🌹"\n\n"aku ingin kita belajar saling mengerti, dan saling melengkapi, agar cinta ini tetap jadi rumah yang kita jaga berdua.😊💝"\n\n"Selama aku masih bernafas aku hanya ingin menjadikan kamu tempat pulang dan alasan terindah untuk bertahan.💝"\n\n"love you more more more than more kesangankuuuu🌹🤍💖💝"';
+
+      // TEKS PENGANTAR UNTUK LAYAR PUTIH
+      const introMessage =
+        "Ayankkk, jika kamu bertanya kenapa aku suka sama kamu... ❤️\n Ya, karna aku sangat sayang sama kamu. \nBahagiaku bersamamu. \nBanyak yang lebih sempurna darinu, tapi aku tetap ingin bersamamu. \nBanyak yang lebih baik dari mu, tapi aku lebih hanya menginginkan dirimu buatku selamanya. \nKepadamu aku tidak minta apa-apa sayang. \nCukup temani dan sayangi aku terus. \nSeperti apapun jalan kita nanti, kita harus tetap bersama.";
+
+      // Pengaturan Kecepatan Pengetikan Pengantar
+      const introTargetDurationMs = 40000;
+      const introTypingSpeed = Math.floor(
+        introTargetDurationMs / introMessage.length,
+      );
+
+      // Pengaturan Kecepatan Pengetikan Pesan Utama
+      const targetDurationMs = 50000;
+      const typingSpeed = Math.floor(targetDurationMs / fullMessage.length);
+
+      // 1. Fungsi Buka Amplop & Putar Musik 1
+      function openEnvelope() {
+        const wrapper = document.getElementById("envelopeWrapper");
+        if (wrapper.classList.contains("open")) return;
+
+        wrapper.classList.add("open");
+
+        // Putar Musik Pertama
+        const music1 = document.getElementById("bgMusic");
+        if (music1) {
+          music1
+            .play()
+            .catch((e) => console.log("Autoplay dicegah browser:", e));
+        }
+
+        // Efek Flash & Sparkle Emas
+        const flash = document.createElement("div");
+        flash.className = "gold-flash";
+        document.body.appendChild(flash);
+
+        setTimeout(() => {
+          flash.classList.add("flash-active");
+          for (let i = 0; i < 30; i++) {
+            createSparkle();
+          }
+        }, 400);
+
+        // Transisi ke Layar Putih Pengantar
+        setTimeout(() => {
+          wrapper.style.opacity = "0";
+          flash.style.opacity = "0";
+
+          setTimeout(() => {
+            wrapper.remove();
+            flash.remove();
+            showIntroScreen();
+          }, 500);
+        }, 1200);
+      }
+
+      // 2. Tampilkan Layar Putih Pengantar
+      function showIntroScreen() {
+        const introOverlay = document.getElementById("introOverlay");
+        introOverlay.style.display = "flex";
+        setTimeout(() => {
+          introOverlay.style.opacity = "1";
+          typeIntroText();
+        }, 50);
+      }
+
+      // Efek Mengetik Teks Pengantar
+      function typeIntroText() {
+        const introText = document.getElementById("introText");
+        let i = 0;
+
+        function type() {
+          if (i < introMessage.length) {
+            const char = introMessage.charAt(i);
+            introText.innerHTML += char === "\n" ? "<br>" : char;
+            i++;
+            setTimeout(type, introTypingSpeed);
+          } else {
+            document.getElementById("nextBtn").classList.add("show");
+          }
+        }
+        type();
+      }
+
+      // 3. Tombol Lanjut Diklik
+      function goToMainMessage() {
+        const music1 = document.getElementById("bgMusic");
+        const music2 = document.getElementById("bgMusic2");
+
+        if (music1) {
+          music1.pause();
+          music1.currentTime = 0;
+        }
+        if (music2) {
+          music2
+            .play()
+            .catch((e) => console.log("Autoplay dicegah browser:", e));
+        }
+
+        const introOverlay = document.getElementById("introOverlay");
+        introOverlay.style.opacity = "0";
+
+        setTimeout(() => {
+          introOverlay.remove();
+          showMainContainer();
+        }, 800);
+      }
+
+      // 4. Tampilkan Surat Utama
+      function showMainContainer() {
+        const main = document.getElementById("mainContainer");
+        main.style.display = "block";
+        setTimeout(() => {
+          main.style.opacity = "1";
+          typeMessage();
+        }, 50);
+      }
+
+      function createSparkle() {
+        const sparkle = document.createElement("div");
+        sparkle.className = "sparkle";
+        document.body.appendChild(sparkle);
+
+        const destinationX = (Math.random() - 0.5) * window.innerWidth * 1.5;
+        const destinationY = (Math.random() - 0.5) * window.innerHeight * 1.5;
+
+        sparkle.style.left = "50%";
+        sparkle.style.top = "50%";
+
+        const animation = sparkle.animate(
+          [
+            { transform: "translate(-50%, -50%) scale(1)", opacity: 1 },
+            {
+              transform: `translate(${destinationX}px,${destinationY}px) scale(0)`,
+              opacity: 0,
+            },
+          ],
+          {
+            duration: 800 + Math.random() * 1000,
+            easing: "cubic-bezier(0, .9, .57, 1)",
+          },
+        );
+
+        animation.onfinish = () => sparkle.remove();
+      }
+
+      // Efek Mengetik Pesan Utama
+      function typeMessage() {
+        const letter = document.getElementById("letterContent");
+        let i = 0;
+
+        function type() {
+          if (i < fullMessage.length) {
+            const char = fullMessage.charAt(i);
+            letter.innerHTML += char === "\n" ? "<br>" : char;
+            i++;
+            setTimeout(type, typingSpeed);
+          }
+        }
+        type();
+      }
+
+      // Tombol Menghindar
+      function moveButton() {
+        const btn = document.getElementById("noBtn");
+        const warn = document.getElementById("noBtnWarning");
+
+        document.body.classList.add("shaking");
+        setTimeout(() => document.body.classList.remove("shaking"), 300);
+
+        btn.classList.add("scared");
+        warn.style.display = "block";
+        warn.innerText = "Eits! jgn. nanti dia sedih 😤";
+
+        const padding = 20;
+        const maxX = window.innerWidth - btn.offsetWidth - padding;
+        const maxY = window.innerHeight - btn.offsetHeight - padding;
+
+        const x = Math.max(padding, Math.random() * maxX);
+        const y = Math.max(padding, Math.random() * maxY);
+
+        btn.style.position = "fixed";
+        btn.style.left = x + "px";
+        btn.style.top = y + "px";
+        btn.style.transition = "all 0.2s ease-out";
+
+        warn.style.position = "fixed";
+        warn.style.left = Math.min(x, window.innerWidth - 180) + "px";
+        warn.style.top = (y > window.innerHeight - 80 ? y - 35 : y + 45) + "px";
+
+        const currentSize = parseFloat(window.getComputedStyle(btn).fontSize);
+        if (currentSize > 10) {
+          btn.style.fontSize = currentSize - 1 + "px";
+          btn.style.padding = "6px 14px";
+        }
+      }
+
+      // 5. WhatsApp Redirect
+      function celebrate() {
+        const waText = encodeURIComponent("Makasih ya sayang...! ❤️🌹");
+        const waUrl = `https://wa.me/${myPhoneNumber}?text=${waText}`;
+        window.location.href = waUrl;
+      }
+
+      function createHearts() {
+        const heart = document.createElement("i");
+        heart.className = "fa-solid fa-heart floating-heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = "105vh";
+        heart.style.fontSize = Math.random() * 20 + 10 + "px";
+        heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }
+
+      setInterval(createHearts, 600);
+    </script>
+  </body>
+</html>
